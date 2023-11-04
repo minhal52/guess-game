@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess a Number</title>
+</head>
+<style>
+    #error {
+        display: block;
+    }
+
+    #ch {
+        text-decoration: underline;
+        color: brown;
+        font-weight: bold;
+    }
+    #hint{
+        color: red;
+    }
+    #new{
+        display: none;
+    }
+</style>
+
+<body>
+    <p id="ch">Guess a Number </p>
+
+    <input type="number" value="" id="guess">
+    <input type="button" value="submit" id="submit" onclick="clickme() ">
+    <span id="error" style="color: red;"></span>
+    <p>Random guesses: <span id="random"></span></p>
+    <p>Remaining guesses:<span id="remaining">10</span></p>
+    <p>Hint: <span id="hint"></span></p>
+    <button id="new" onclick="game()">new game</button>
+    <script>
+        let num = parseInt(Math.random(parseInt) * 10 + 1);
+        // console.log(num)
+        let guessInp = document.querySelector("#guess");
+        let rem = document.querySelector("#remaining");
+        let myguesses = document.querySelector("#random");
+        let newbtn = document.querySelector("#new");
+      
+
+        let arr = [];
+        let remainingGuesses = 10;
+        let aa = document.getElementById('submit');
+
+        function clickme() {
+            let guess = parseInt(guessInp.value);
+            
+            if (!isNaN(guess)) {
+                document.querySelector("#error").textContent = "enter a valid num";
+                remainingGuesses--;
+                arr.push(guessInp.value);
+                // console.log(arr)
+                if (guess === num) {
+                    document.querySelector("#error").textContent = "Correct";
+                    aa.setAttribute('disabled', '');
+                    newbtn.style.display='block';
+                } else if (remainingGuesses === 0) {
+                    document.querySelector("#hint").textContent = "run out of guesses , The correct number was " + num;
+                    aa.setAttribute('disabled', '');
+                    newbtn.style.display='block';
+                } else {
+                    document.querySelector("#error").textContent = "Incorrect";
+                }
+                    myguesses.textContent += guess + ",";
+                    rem.textContent = remainingGuesses;
+                    guessInp.value = "";
+            }
+        }
+        function game() {
+            newbtn.style.display='none';
+            aa.removeAttribute('disabled');
+            num = parseInt(Math.random(parseInt) * 10 + 1);
+            // console.log('New: ',num)
+            remainingGuesses = 10;
+            arr = [];
+            rem.textContent = remainingGuesses;
+            myguesses.textContent = "";
+            document.querySelector("#error").textContent = "";
+            document.querySelector("#hint").textContent = "";
+        } 
+    </script>
+</body>
+
+</html>
